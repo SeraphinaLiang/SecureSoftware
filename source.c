@@ -11,19 +11,19 @@
      8	
      9	struct data_t {
     10	    char buf[777];
-    11	    void (*fp)(char *);
+    11	    void (*fp)(char *);  // 栈溢出，覆盖返回指针fp的地址  0x80483e0 or ox8048450
     12	} somedata;
     13	
     14	int main(int argc, char **argv) {
     15	    somedata.fp = &greetUser;
     16	
     17	    if(argc < 2) { // argc:number of parameters
-    18	        printf("Usage: %s YourName\n", argv[0]);
+    18	        printf("Usage: %s YourName\n", argv[0]);  // usage /casper/casper4 YourName
     19	        exit(1);
     20	    }
     21	
-    22	    strcpy(somedata.buf, argv[1]);
-    23	    (somedata.fp)(somedata.buf);
+    22	    strcpy(somedata.buf, argv[1]); // argv[1] 存输入,copy 到somedata.buf
+    23	    (somedata.fp)(somedata.buf); // 调用greetUser（somedata.buf）
     24	
     25	    return 0;
     26	}
