@@ -1,3 +1,44 @@
+
+casper0@casper:~$ cat -n /casper/casper3.c
+1 #include <stdlib.h>
+2 #include <unistd.h>
+3 #include <string.h>
+4 #include <stdio.h>
+5
+6 int main()
+7 {
+8 char pin[4];
+9 char input[5]; // space for null byte
+10 int i;
+11 int correct;
+12
+13 srand(time(0));
+14
+15 for (i = 0; i < 4; i++) {
+16 pin[i] = rand() % 10 + ’0’;
+17 }
+18
+19 printf("Enter pincode: ");
+20 scanf("%s", input);
+21
+22 correct = 1;
+23 for (i = 0; i < 4 && correct; i++) {
+24 if (pin[i] != input[i]) {
+25 printf("Pin incorrect\n");
+26 correct = 0;
+27 }
+9
+28 }
+29
+30 if (correct) {
+31 setresuid(geteuid(), geteuid(), geteuid());
+32 execl("/bin/xh", "/bin/xh", NULL);
+33 }
+34
+35 return 0;
+36 }
+----------------------------------------------------
+
 // cat -n /casper/casper4.c  -- check source code
 //  /casper/casper3  -- run
 
