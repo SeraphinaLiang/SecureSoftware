@@ -160,15 +160,18 @@ casper0@casper:~$ cat -n /casper/casper3.c
     
 //8 ----------------------------------------------------------------------
 
+ 不可以用buffer overflow， 1. code栈不可以执行，把shellcode放到栈里没有用。 2. 不能覆盖函数返回地址，canery bird 已经打开。
+ 只能改写isAdmin的内容。
+ 
      1	#include <stdio.h>
      2	#include <unistd.h>
      3	#include <stdlib.h>
      4	
-     5	int isAdmin = 0;
+     5	int isAdmin = 0;  全局变量，存在heap中，地址不变。
      6	
      7	void greetUser(char *s) {
      8	    char buf[777];
-     9	    sprintf(buf, "Hello %s!\n", s);
+     9	    sprintf(buf, "Hello %s!\n", s); 把s写入buf中，可造成buffer overflow （此题无效）
     10	    printf(buf);
     11	}
     12	
