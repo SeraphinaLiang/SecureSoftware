@@ -172,7 +172,7 @@ casper0@casper:~$ cat -n /casper/casper3.c
      7	void greetUser(char *s) {
      8	    char buf[777];
      9	    sprintf(buf, "Hello %s!\n", s); 把s写入buf中，可造成buffer overflow （此题无效）
-    10	    printf(buf);
+    10	    printf(buf);  // attack here : format-string attack
     11	}
     12	
     13	int main(int argc, char **argv) {
