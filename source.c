@@ -50,7 +50,7 @@ casper0@casper:~$ cat -n /casper/casper3.c
      6	    printf("Hello %s!\n", s);
      7	}
      8	
-     9	struct data_t {
+     9	struct data_t {      // 栈分配在其他变量之后，先fp后buf
     10	    char buf[777];
     11	    void (*fp)(char *);  // 栈溢出，覆盖返回指针fp的地址  0x80483e0 or ox8048450
     12	} somedata;
@@ -81,7 +81,7 @@ casper0@casper:~$ cat -n /casper/casper3.c
      6	int enableFullAdmin = 0;
      7	
      8	struct role_t {
-     9	    char rolename[32];
+     9	    char rolename[32];   // 先分配authority，后分配栈rolename[]
     10	    int authority;
     11	} defaultRole = { .rolename = "regular user", .authority = 0 };
     12	
